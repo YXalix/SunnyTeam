@@ -134,6 +134,17 @@ def InsertAttend(userID,activityID,attendTime,attendReason,stateType):
         db.rollback()
     cursor.close()
 
+def InsertLike(activityID,userID,likeTime):
+    db = db_connect()
+    cursor = db.cursor()
+    sql = "INSERT INTO Likes(activityID,userID,likeTime) VALUES({activityID},{userID},'{likeTime}')".format(activityID=activityID,userID=userID,likeTime=likeTime)
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except:
+        db.rollback()
+    cursor.close()
+
 def Delete(tablename,key,value):
     db = db_connect()
     cursor = db.cursor()

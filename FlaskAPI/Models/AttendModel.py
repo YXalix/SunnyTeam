@@ -25,7 +25,7 @@ class Attend():
         return True
 
     def deleteAttend(self):
-        dao.Delete('Attends','userID',self.userID,'activityID',self.activityID)
+        dao.Delete2Key('Attends','userID',self.userID,'activityID',self.activityID)
         return True
 
     def setUserID(self,userID):

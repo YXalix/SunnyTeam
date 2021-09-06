@@ -1,5 +1,5 @@
-from UserModel import User
-import dao
+from Models.UserModel import User
+import Models.dao as dao
 
 class OrdinaryUser(User):
     def __init__(self):

@@ -1,5 +1,5 @@
 from datetime import datetime
-import dao
+import Models.dao as dao
 
 
 class User():
