@@ -19,6 +19,14 @@ class _SignInPageState extends State<SignInPage> {
   //password的控制器
   final TextEditingController _passController = TextEditingController();
 
+  // 跳转 注册界面
+  _handleNavSignUp() {
+    Navigator.pushNamed(
+      context,
+      "/sign-up",
+    );
+  }
+
   _handleSignIn() async {
     if (!duIsAccount(_userIDController.value.text, 10)) {
       toastInfo(msg: 'Please Input correct Account');
@@ -41,13 +49,18 @@ class _SignInPageState extends State<SignInPage> {
     print(test.userId);
 
     print(res);
+
+    Navigator.pushNamed(
+      context,
+      "/app",
+    );
   }
 
   // logo
   Widget _buildLogo() {
     return Container(
       width: duSetWidth(110),
-      margin: EdgeInsets.only(top: duSetHeight(40 + 44.0)), // 顶部系统栏 44px
+      margin: EdgeInsets.only(top: duSetHeight(30 + 44.0)), // 顶部系统栏 44px
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -143,12 +156,7 @@ class _SignInPageState extends State<SignInPage> {
               children: [
                 // 注册
                 btnFlatButtonWidget(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      "/sign-up",
-                    );
-                  },
+                  onPressed: _handleNavSignUp,
                   gbColor: AppColors.thirdElement,
                   title: "Sign up",
                 ),

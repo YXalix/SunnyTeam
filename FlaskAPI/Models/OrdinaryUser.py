@@ -1,3 +1,6 @@
+from logging import NullHandler
+
+from pymysql import NULL
 from Models.UserModel import User
 import Models.dao as dao
 
@@ -8,9 +11,20 @@ class OrdinaryUser(User):
         self.userName = 'Someone'
         self.School = 'ZJU'
 
+    def generate_token(userid):
+        return userid
+
+    def userCheckByID(userID):
+        temp = dao.queryByKey('OrdinaryUsers','userID',userID)
+        if temp == None:
+            return False
+        else:
+            return True
+
     def OrdinaryInitByID(self,userID):
         temp = dao.queryByKey('OrdinaryUsers','userID',userID)
-        self.OrdinaryInit(temp[0],temp[1],temp[2],temp[3],temp[4],temp[5])
+        if temp != None:
+            self.OrdinaryInit(temp[0],temp[1],temp[2],temp[3],temp[4],temp[5])
 
     def OrdinaryInit(self,userID,userPassword,registerTime,userType,userName,School):
         self.userID = userID
@@ -77,5 +91,5 @@ class OrdinaryUser(User):
         
 if __name__ == "__main__":
     user = OrdinaryUser()
-    user.OrdinaryInitByID(516875454)
+    user.OrdinaryInitByID(5168754)
     print(user.userName)

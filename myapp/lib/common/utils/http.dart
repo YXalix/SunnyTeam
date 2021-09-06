@@ -4,7 +4,6 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:myapp/common/utils/utils.dart';
 import 'package:myapp/common/values/values.dart';
 import 'package:myapp/global.dart';
 
@@ -66,7 +65,7 @@ class HttpUtil {
     //dio.interceptors.add(InterceptorsWrapper());
 
     // 加内存缓存
-    dio.interceptors.add(NetCache());
+    //dio.interceptors.add(NetCache());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
     if (!Global.isRelease && PROXY_ENABLE) {
