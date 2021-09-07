@@ -5,6 +5,7 @@ import 'package:myapp/common/entitys/entitys.dart';
 import 'package:myapp/common/utils/utils.dart';
 import 'package:myapp/common/values/values.dart';
 import 'package:myapp/common/widgets/widgets.dart';
+import 'package:myapp/global.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -39,16 +40,18 @@ class _SignInPageState extends State<SignInPage> {
 
     UserRequestLoginEntity params = UserRequestLoginEntity(
       userId: _userIDController.value.text,
-      password: duSHA256(_passController.value.text),
+      password:
+          _passController.value.text, //duSHA256(_passController.value.text),
     );
 
     UserResponseLoginEntity res = await UserAPI.login(params: params);
 
-    UserRequestLoginEntity test = await UserAPI.test();
-
-    print(test.userId);
-
-    print(res);
+    if (res.token.isEmpty) {
+      toastInfo(msg: 'account or password error');
+      return;
+    }
+    Global.isOfflineLogin = true;
+    Global.saveProfile(res);
 
     Navigator.pushNamed(
       context,

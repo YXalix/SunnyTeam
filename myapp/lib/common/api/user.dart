@@ -6,12 +6,14 @@ class UserAPI {
   /// 登录
   static Future<UserResponseLoginEntity> login(
       {UserRequestLoginEntity? params}) async {
-    var response = await HttpUtil().post('/user/login', params: params);
+    var response = await HttpUtil().post('/api/user/login', params: params);
     return UserResponseLoginEntity.fromJson(response);
   }
 
-  static Future<UserRequestLoginEntity> test() async {
-    var response = await HttpUtil().get('/temp');
-    return UserRequestLoginEntity.fromJson(response);
+  /// Signup
+  static Future<UserResponseSignupEntity> signup(
+      {UserRequestSignupEntity? params}) async {
+    var response = await HttpUtil().post('/api/user/signup', params: params);
+    return UserResponseSignupEntity.fromJson(response);
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/common/api/apis.dart';
+import 'package:myapp/common/entitys/entitys.dart';
 import 'package:myapp/common/utils/utils.dart';
 import 'package:myapp/common/values/values.dart';
 import 'package:myapp/common/widgets/widgets.dart';
@@ -18,7 +20,12 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _schoolController = TextEditingController();
 
-  _handleSignUp() {
+  // 返回上一页
+  _handleNavPop() {
+    Navigator.pop(context);
+  }
+
+  _handleSignUp() async {
     if (!duCheckAccountLength(_userIDController.value.text, 10)) {
       toastInfo(msg: '用户名不能大于10位');
       return;
@@ -38,6 +45,27 @@ class _SignUpPageState extends State<SignUpPage> {
     if (!duCheckPasswordEqual(
         _password1Controller.value.text, _password2Controller.value.text)) {
       toastInfo(msg: '密码不一致');
+      return;
+    }
+    if (!duCheckStringLength(_userNameController.value.text, -1)) {
+      toastInfo(msg: 'username is null');
+      return;
+    }
+    if (!duCheckStringLength(_schoolController.value.text, -1)) {
+      toastInfo(msg: 'school is null');
+      return;
+    }
+    UserRequestSignupEntity params = UserRequestSignupEntity(
+      userid: _userIDController.value.text,
+      userpassword: _password1Controller
+          .value.text, //duSHA256(_passController.value.text),
+      username: _userNameController.value.text,
+      school: _schoolController.value.text,
+    );
+
+    UserResponseSignupEntity res = await UserAPI.signup(params: params);
+    if (res.userid.isEmpty) {
+      toastInfo(msg: 'userid is existed');
       return;
     }
     Navigator.pop(context);
@@ -106,7 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
           // 创建
           Container(
             height: duSetHeight(44),
-            margin: EdgeInsets.only(top: duSetHeight(15)),
+            margin: EdgeInsets.only(top: duSetHeight(20)),
             child: btnFlatButtonWidget(
               onPressed: _handleSignUp,
               width: 295,
@@ -115,39 +143,25 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           // Spacer(),
-
-          // Fogot password
-          Container(
-            height: duSetHeight(22),
-            margin: EdgeInsets.only(top: duSetHeight(20)),
-            child: TextButton(
-              onPressed: () => {},
-              child: Text(
-                "Fogot password?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.secondaryElementText,
-                  fontFamily: "Avenir",
-                  fontWeight: FontWeight.w400,
-                  fontSize: duSetFontSize(16),
-                  height: 1, // 设置下行高，否则字体下沉
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 
-  // 第三方
-  Widget _buildThirdPartyLogin() {
-    return Container();
-  }
-
   // 有账号
   Widget _buildHaveAccountButton() {
-    return Container();
+    return Container(
+      margin: EdgeInsets.only(bottom: duSetHeight(20)),
+      child: btnFlatButtonWidget(
+        onPressed: _handleNavPop,
+        width: 294,
+        gbColor: AppColors.secondaryElement,
+        fontColor: AppColors.primaryText,
+        title: "I have an account",
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      ),
+    );
   }
 
   @override
@@ -175,7 +189,6 @@ class _SignUpPageState extends State<SignUpPage> {
             _buildLogo(),
             _buildInputForm(),
             Spacer(),
-            _buildThirdPartyLogin(),
             _buildHaveAccountButton(),
           ],
         ),

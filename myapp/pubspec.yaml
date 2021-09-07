@@ -35,6 +35,10 @@ dependencies:
 
   flutter_screenutil: ^5.0.0+2
 
+  #ui
+  flutter_easyrefresh: ^2.2.1
+
+
   fluttertoast: ^8.0.8
   
   # storage
@@ -48,6 +52,12 @@ dependencies:
   # sha
   crypto: ^3.0.1
 
+  # 状态管理
+  provider: ^6.0.0
+
+  skeleton_text: ^3.0.0
+
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

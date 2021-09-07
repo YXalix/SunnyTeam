@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/common/entitys/entitys.dart';
+import 'package:myapp/common/provider/provider.dart';
 import 'package:myapp/common/utils/utils.dart';
 import 'package:myapp/common/values/values.dart';
 
@@ -12,6 +13,15 @@ class Global {
   static UserResponseLoginEntity profile = UserResponseLoginEntity(
     token: "",
   );
+
+  /// 是否第一次打开
+  static bool isFirstOpen = false;
+
+  /// 是否离线登录
+  static bool isOfflineLogin = false;
+
+  /// 应用状态
+  static AppState appState = AppState();
 
   /// 是否 release
   static bool get isRelease => bool.fromEnvironment("dart.vm.product");
@@ -24,6 +34,12 @@ class Global {
     // 工具初始
     await StorageUtil.init();
     HttpUtil();
+
+    // 读取设备第一次打开
+    isFirstOpen = !StorageUtil().getBool(STORAGE_DEVICE_ALREADY_OPEN_KEY);
+    if (isFirstOpen) {
+      StorageUtil().setBool(STORAGE_DEVICE_ALREADY_OPEN_KEY, true);
+    }
 
     // 读取离线用户信息
     var _profileJSON = StorageUtil().getJSON(STORAGE_USER_PROFILE_KEY);
