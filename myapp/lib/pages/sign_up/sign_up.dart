@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/common/api/apis.dart';
 import 'package:myapp/common/entitys/entitys.dart';
 import 'package:myapp/common/utils/utils.dart';
@@ -27,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _handleSignUp() async {
     if (!duCheckAccountLength(_userIDController.value.text, 10)) {
-      toastInfo(msg: '用户名不能大于10位');
+      toastInfo(msg: '用户名不能为空或者大于10位');
       return;
     }
     if (!duIsAccount(_userIDController.value.text, 10)) {
@@ -68,7 +69,8 @@ class _SignUpPageState extends State<SignUpPage> {
       toastInfo(msg: 'userid is existed');
       return;
     }
-    Navigator.pop(context);
+    Get.back(result: 'success');
+    //Navigator.pop(context);
   }
 
   // logo
@@ -166,6 +168,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.arguments);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: transparentAppBar(

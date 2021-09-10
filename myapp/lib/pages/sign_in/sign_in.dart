@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:myapp/common/api/apis.dart';
 import 'package:myapp/common/entitys/entitys.dart';
 import 'package:myapp/common/utils/utils.dart';
@@ -21,11 +22,13 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passController = TextEditingController();
 
   // 跳转 注册界面
-  _handleNavSignUp() {
-    Navigator.pushNamed(
+  _handleNavSignUp() async {
+    var data = await Get.toNamed('/hha', arguments: 'Get is the best');
+    print(data);
+    /*Navigator.pushNamed(
       context,
       "/sign-up",
-    );
+    );*/
   }
 
   _handleSignIn() async {
@@ -251,7 +254,7 @@ class _SignInPageState extends State<SignInPage> {
     return Container(
       margin: EdgeInsets.only(bottom: duSetHeight(20)),
       child: btnFlatButtonWidget(
-        onPressed: () {},
+        onPressed: _handleNavSignUp,
         width: 294,
         gbColor: AppColors.secondaryElement,
         fontColor: AppColors.primaryText,

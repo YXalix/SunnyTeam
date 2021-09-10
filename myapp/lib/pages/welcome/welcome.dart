@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:myapp/common/utils/utils.dart';
 import 'package:myapp/common/values/values.dart';
 
@@ -100,10 +102,11 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
         child: Text("Get started"),
         onPressed: () {
-          Navigator.pushNamed(
+          Get.toNamed('/sign-in');
+          /*Navigator.pushNamed(
             context,
             "/sign-in",
-          );
+          );*/
         },
       ),
     );

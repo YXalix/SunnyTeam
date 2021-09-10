@@ -36,4 +36,13 @@ class AppColors {
 
   /// like icon
   static const Color likeElement = Color.fromARGB(255, 200, 73, 73);
+
+  ///ui color1
+  static const Color uiColor1 = Color.fromARGB(255, 121, 136, 209);
+
+  ///ui color2
+  static const Color uiColor2 = Color.fromARGB(255, 119, 226, 187);
+
+  ///ui color3
+  static const Color uiColor3 = Color.fromARGB(255, 245, 211, 154);
 }

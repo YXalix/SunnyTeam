@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:myapp/common/api/activity.dart';
 import 'package:myapp/common/entitys/entitys.dart';
-import 'package:myapp/common/utils/screen.dart';
-import 'package:myapp/common/values/colors.dart';
 import 'package:myapp/pages/main/activity_item_widget.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
@@ -28,6 +27,17 @@ class _MainPageState extends State<MainPage> {
   // 读取所有数据
   _loadAllData({bool refresh = false}) async {
     _activityList = await ActivityAPI.activityPageList(refresh: refresh);
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  // 读取所有数据
+  _loadAdditonData({bool refresh = false}) async {
+    ActivityResponseEntity? newactivitys =
+        await ActivityAPI.activityPageList(refresh: refresh);
+    _activityList?.activitys.addAll(newactivitys.activitys);
     if (mounted) {
       setState(() {});
     }
@@ -38,12 +48,20 @@ class _MainPageState extends State<MainPage> {
     return Container();
   }
 
-  // 新闻列表
+  // activitylist
   Widget _buildActivityList() {
     return _activityList == null
-        ? Container(
-            height: duSetHeight(161 * 5 + 100),
-            color: AppColors.primaryElement,
+        ? SkeletonAnimation(
+            shimmerColor: Colors.grey,
+            borderRadius: BorderRadius.circular(20),
+            shimmerDuration: 1000,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              margin: EdgeInsets.only(top: 40),
+            ),
           )
         : Column(
             children: _activityList!.activitys.map((item) {
@@ -63,6 +81,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return EasyRefresh(
       enableControlFinishRefresh: true,
+      enableControlFinishLoad: false,
       controller: _controller,
       header: ClassicalHeader(),
       onRefresh: () async {
@@ -70,6 +89,12 @@ class _MainPageState extends State<MainPage> {
           refresh: true,
         );
         _controller?.finishRefresh();
+      },
+      onLoad: () async {
+        _loadAdditonData(
+          refresh: true,
+        );
+        _controller?.finishLoad();
       },
       child: SingleChildScrollView(
         child: Column(
