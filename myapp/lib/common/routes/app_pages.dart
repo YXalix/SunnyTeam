@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:myapp/pages/account/accountedit.dart';
 import 'package:myapp/pages/application/application.dart';
 import 'package:myapp/pages/avtivityhome/index.dart';
 import 'package:myapp/pages/nofound/index.dart';
@@ -37,10 +38,12 @@ class AppPages {
       name: AppRoutes.signup,
       page: () => SignUpPage(),
     ),
-    GetPage(
-      name: AppRoutes.home,
-      page: () => ApplicationPage(),
-    ),
+    GetPage(name: AppRoutes.home, page: () => ApplicationPage(), children: [
+      GetPage(
+        name: AppRoutes.accountedit,
+        page: () => AccountEditPage(),
+      )
+    ]),
     GetPage(
       name: AppRoutes.activityindex,
       page: () => ActivityPage(),

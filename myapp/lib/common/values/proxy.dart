@@ -1,5 +1,5 @@
 // 是否启用代理
-const PROXY_ENABLE = true;
+const PROXY_ENABLE = false;
 
 /// 代理服务IP
 const PROXY_IP = '10.46.80.71';

@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const NotFound = '/notfound';
 
   static const activityindex = '/activity/777';
+  static const accountedit = '/accountedit';
 }

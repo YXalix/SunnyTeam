@@ -23,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
 
   // 跳转 注册界面
   _handleNavSignUp() async {
-    var data = await Get.toNamed('/hha', arguments: 'Get is the best');
+    var data = await Get.toNamed('/sign-up', arguments: 'Get is the best');
     print(data);
     /*Navigator.pushNamed(
       context,

@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myapp/common/api/apis.dart';
 import 'package:myapp/common/entitys/entitys.dart';
@@ -12,7 +14,7 @@ import 'package:myapp/pages/avtivityhome/commentDetail.dart';
 
 class ActivityPage extends StatelessWidget {
   ActivityPage({Key? key}) : super(key: key);
-
+  final TextEditingController _ReasonController = TextEditingController();
   final liked = false.obs;
   final comments = 1.obs;
   final _commentList = CommentListResponseEntity().obs;
@@ -57,6 +59,36 @@ class ActivityPage extends StatelessWidget {
     );
   }
 
+  _showAlert(BuildContext context) {
+    showPlatformDialog(
+      context: context,
+      builder: (_) => BasicDialogAlert(
+        title: Text("Reason"),
+        content: inputTextEdit(controller: _ReasonController),
+        actions: <Widget>[
+          BasicDialogAction(
+            title: Text("OK"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildfeet(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
+      width: 359.w,
+      child: TextButton(
+        style: TextButton.styleFrom(backgroundColor: Colors.blue[100]),
+        child: Text('报名参加'),
+        onPressed: () => {_showAlert(context)},
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _loadAllData();
@@ -66,14 +98,19 @@ class ActivityPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            TextButton(onPressed: _loadAllData, child: Text("change")),
             activityDetailW(data),
-            commentDetailW(_commentList.value),
-            Center(
-              child: Text("activity page${data.activityname}"),
+            Divider(
+              height: 10,
             ),
+            Obx(() => commentDetailW(_commentList.value)),
+            Container(
+              height: 40.h,
+            )
           ],
         ),
       ),
+      bottomSheet: _buildfeet(context),
     );
   }
 }
